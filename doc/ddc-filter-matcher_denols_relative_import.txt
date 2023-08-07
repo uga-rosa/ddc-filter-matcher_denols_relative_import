@@ -1,0 +1,44 @@
+*ddc_filter_matcher_denols_relative_import.txt*		ddc filter for denols
+
+Author:  uga-rosa <uga6603@gmail.com>
+License: MIT License
+
+==============================================================================
+CONTENTS		*ddc-filter-matcher_denols_relative_import-contents*
+
+Introduction		|ddc-filter-matcher_denols_relative_import-introduction|
+Example			|ddc-filter-matcher_denols_relative_import-example|
+
+
+==============================================================================
+INTRODUCTION		*ddc-filter-matcher_denols_relative_import-introduction*
+
+Ddc filter for ddc-source-nvim-lsp and denols.
+
+https://github.com/Shougo/ddc-source-nvim-lsp
+
+The number of candidates for auto import returned by denols is very large,
+because of including older versions of libraries. And It is also very
+inconvenient because there is no way to distinguish between them.
+
+This filter excludes all imports from `https://deno.land` or other url
+(`deno.suggest.imports.hosts`), leaving only relative imports from `deps.ts`
+or other sources.
+
+
+==============================================================================
+EXAMPLE			*ddc-filter-matcher_denols_relative_import-example*
+
+>
+	call ddc#custom#patch_global(#{
+	      \ sourceOptions: #{
+	      \   nvim-lsp: #{
+	      \     matchers: ['matcher_denols_relative_import'],
+	      \   },
+	      \ },
+	      \})
+<
+
+
+==============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:
