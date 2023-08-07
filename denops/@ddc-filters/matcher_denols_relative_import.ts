@@ -11,8 +11,9 @@ export class Filter extends BaseFilter<Params> {
     denops,
     items,
   }: FilterArguments<Params>): Promise<Item[]> {
-    return await items.reduce(async (acc, item) => {
-      const items = await acc;
+    const retItems: Item[] = [];
+
+    for (const item of items) {
       if (
         !u.isObjectOf({
           user_data: u.isObjectOf({
@@ -21,7 +22,8 @@ export class Filter extends BaseFilter<Params> {
           }),
         })(item)
       ) {
-        return [...items, item];
+        retItems.push(item);
+        continue;
       }
       const lspitem = JSON.parse(item.user_data.lspitem);
       if (
@@ -33,7 +35,8 @@ export class Filter extends BaseFilter<Params> {
           }),
         })(lspitem)
       ) {
-        return [...items, item];
+        retItems.push(item);
+        continue;
       }
 
       const clientId = item.user_data.clientId;
@@ -48,11 +51,11 @@ export class Filter extends BaseFilter<Params> {
 
       const source = lspitem.data.tsc.source;
       if (hosts.every((host) => !source.startsWith(host))) {
-        return [...items, item];
-      } else {
-        return items;
+        retItems.push(item);
       }
-    }, Promise.resolve([] as Item[]));
+    }
+
+    return retItems;
   }
 
   params(): Params {
