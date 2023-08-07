@@ -14,6 +14,7 @@ export class Filter extends BaseFilter<Params> {
     const retItems: Item[] = [];
 
     for (const item of items) {
+      // ddc-source-nvim-lsp
       if (
         !u.isObjectOf({
           user_data: u.isObjectOf({
@@ -26,6 +27,7 @@ export class Filter extends BaseFilter<Params> {
         continue;
       }
       const lspitem = JSON.parse(item.user_data.lspitem);
+      // denols
       if (
         !u.isObjectOf({
           data: u.isObjectOf({
@@ -39,6 +41,7 @@ export class Filter extends BaseFilter<Params> {
         continue;
       }
 
+      // hosts
       const clientId = item.user_data.clientId;
       if (this.hostByClient[clientId] == null) {
         const hosts = await (denops.call(
@@ -49,6 +52,7 @@ export class Filter extends BaseFilter<Params> {
       }
       const hosts = this.hostByClient[clientId];
 
+      // Not import from hosts
       const source = lspitem.data.tsc.source;
       if (hosts.every((host) => !source.startsWith(host))) {
         retItems.push(item);
