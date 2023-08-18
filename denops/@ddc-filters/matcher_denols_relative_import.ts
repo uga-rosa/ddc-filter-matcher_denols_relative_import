@@ -2,7 +2,7 @@ import { BaseFilter, Item } from "https://deno.land/x/ddc_vim@v3.9.0/types.ts";
 import { FilterArguments } from "https://deno.land/x/ddc_vim@v3.9.0/base/filter.ts";
 import * as u from "https://deno.land/x/unknownutil@v3.4.0/mod.ts";
 
-type Params = Record<never, never>;
+type Params = Record<PropertyKey, never>;
 
 export class Filter extends BaseFilter<Params> {
   hostByClient: Record<string, string[]> = {};
